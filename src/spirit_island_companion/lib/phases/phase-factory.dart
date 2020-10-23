@@ -17,6 +17,13 @@ class PhaseFactory {
             title: "Do even one more thins",
             details:
                 "dasdfgbiuoöklähgkm,flöhjmflgkhnmv lksd fnm slkd nv,  werhw kiefn  dsklf"),
+      ]),
+      Phase(index: 2, title: "Finish round", steps: [
+        PhaseStep(title: "Do something", details: "sndjaksdnajsdnaskdjans"),
+        PhaseStep(
+            title: "Do even one more thins",
+            details:
+                "dasdfgbiuoöklähgkm,flöhjmflgkhnmv lksd fnm slkd nv,  werhw kiefn  dsklf"),
       ])
     ];
   }

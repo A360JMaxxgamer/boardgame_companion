@@ -16,7 +16,39 @@ class _PhasePageState extends State<PhasePage> {
 
   static const cardHeight = 100.0;
 
+  int currentStep = 0;
+
   _PhasePageState({this.phases});
+
+  void gotoNextState() {
+    setState(() {
+      resetCurrentStep();
+      currentStep = currentStep + 1 > phases.length - 1 ? 0 : currentStep + 1;
+    });
+  }
+
+  void gotoPrevState() {
+    setState(() {
+      resetCurrentStep();
+      currentStep = currentStep - 1 < 0 ? phases.length - 1 : currentStep - 1;
+    });
+  }
+
+  void checkStep(PhaseStep step, bool checked) {
+    setState(() {
+      step.checked = checked;
+
+      if (phases[currentStep].steps.every((phaseStep) => phaseStep.checked)) {
+        gotoNextState();
+      }
+    });
+  }
+
+  void resetCurrentStep() {
+    phases[currentStep].steps.forEach((phaseStep) {
+      phaseStep.checked = false;
+    });
+  }
 
   @override
   Widget build(Object context) {
@@ -26,6 +58,9 @@ class _PhasePageState extends State<PhasePage> {
         children: <Widget>[
           Expanded(
             child: Stepper(
+              currentStep: currentStep,
+              onStepContinue: gotoNextState,
+              onStepCancel: gotoPrevState,
               steps: List<Step>.generate(phases.length, (index) {
                 var phase = phases[index];
                 return Step(
@@ -42,9 +77,21 @@ class _PhasePageState extends State<PhasePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                child: Text(step.title),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Checkbox(
+                                      value: step.checked,
+                                      onChanged: (checked) =>
+                                          {checkStep(step, checked)},
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(step.title),
+                                  ),
+                                ],
                               ),
                               IconButton(
                                 alignment: Alignment.centerRight,
