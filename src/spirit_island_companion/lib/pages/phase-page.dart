@@ -96,7 +96,16 @@ class _PhasePageState extends State<PhasePage> {
                               IconButton(
                                 alignment: Alignment.centerRight,
                                 icon: Icon(Icons.info),
-                                onPressed: () => {},
+                                onPressed: () async {
+                                  await showDialog(
+                                      context: context,
+                                      child: AlertDialog(
+                                        content: Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text(step.details),
+                                        ),
+                                      ));
+                                },
                               )
                             ],
                           ),
