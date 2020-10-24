@@ -1,7 +1,5 @@
-import 'package:boardgame_companion/model/phases/phase-factory.dart';
 import 'package:boardgame_companion/pages/games-page.dart';
 import 'package:flutter/material.dart';
-import 'package:boardgame_companion/pages/phase-page.dart';
 
 void main() {
   runApp(SpiritIslandCompanionApp());

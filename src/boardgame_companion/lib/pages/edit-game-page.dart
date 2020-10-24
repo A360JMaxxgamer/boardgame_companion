@@ -1,4 +1,5 @@
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/pages/edit-phase-page.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +64,7 @@ class _EditGamePageState extends State<EditGamePage> {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute<void>(
                             builder: (BuildContext context) {
-                          return EditPhasePage();
+                          return EditPhasePage(phase: Phase());
                         }));
                       })
                 ],

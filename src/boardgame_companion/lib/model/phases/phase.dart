@@ -1,10 +1,9 @@
-
 import 'package:boardgame_companion/model/phases/phase-step.dart';
 
 class Phase {
-  final int index;
-  final String title;
-  final List<PhaseStep> steps;
+  int index = 0;
+  String title = "";
+  List<PhaseStep> steps = List<PhaseStep>.empty();
 
-  Phase({this.index, this.title, this.steps});
+  Phase();
 }
