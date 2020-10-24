@@ -1,3 +1,5 @@
+import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/pages/edit-game-page.dart';
 import 'package:flutter/material.dart';
 
 class GamesPage extends StatefulWidget {
@@ -21,7 +23,14 @@ class _GamesPageState extends State<GamesPage> {
           IconButton(
             alignment: Alignment.centerRight,
             icon: Icon(Icons.add_circle),
-            onPressed: () => {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute<void>(builder: (BuildContext context) {
+                return EditGamePage(
+                  boardgame: Boardgame(),
+                );
+              }));
+            },
             iconSize: 50.0,
           )
         ],
