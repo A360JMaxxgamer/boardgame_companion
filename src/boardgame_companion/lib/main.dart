@@ -1,4 +1,5 @@
 import 'package:boardgame_companion/model/phases/phase-factory.dart';
+import 'package:boardgame_companion/pages/games-page.dart';
 import 'package:flutter/material.dart';
 import 'package:boardgame_companion/pages/phase-page.dart';
 
@@ -11,10 +12,9 @@ class SpiritIslandCompanionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-            builder: (context) =>
-                PhasePage(phases: PhaseFactory.createPhases()));
+        return MaterialPageRoute(builder: (context) => GamesPage());
       },
     );
   }
