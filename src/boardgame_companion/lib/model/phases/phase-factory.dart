@@ -1,5 +1,6 @@
-import 'package:boardgame_companion/phases/phase-step.dart';
-import 'package:boardgame_companion/phases/phase.dart';
+
+import 'package:boardgame_companion/model/phases/phase-step.dart';
+import 'package:boardgame_companion/model/phases/phase.dart';
 
 class PhaseFactory {
   static List<Phase> createPhases() {

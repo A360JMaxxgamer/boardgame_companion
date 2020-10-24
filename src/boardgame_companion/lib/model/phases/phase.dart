@@ -1,4 +1,5 @@
-import 'package:boardgame_companion/phases/phase-step.dart';
+
+import 'package:boardgame_companion/model/phases/phase-step.dart';
 
 class Phase {
   final int index;
