@@ -1,4 +1,5 @@
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/pages/edit-phase-page.dart';
 import 'package:flutter/material.dart';
 
 class EditGamePage extends StatefulWidget {
@@ -59,7 +60,12 @@ class _EditGamePageState extends State<EditGamePage> {
                   IconButton(
                       alignment: Alignment.centerRight,
                       icon: Icon(Icons.add_circle),
-                      onPressed: () => {})
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute<void>(
+                            builder: (BuildContext context) {
+                          return EditPhasePage();
+                        }));
+                      })
                 ],
               ))
         ],
