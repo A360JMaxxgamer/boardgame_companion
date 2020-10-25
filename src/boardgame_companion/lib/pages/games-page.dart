@@ -18,6 +18,16 @@ class _GamesPageState extends State<GamesPage> {
         appBar: AppBar(
           title: Text("Games"),
         ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add_circle),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute<void>(builder: (BuildContext context) {
+                return EditGamePage(
+                  boardgame: Boardgame(),
+                );
+              }));
+            }),
         body: StreamBuilder<int>(
           stream: _dataService.dataObservable,
           builder: (context, snapshot) {
@@ -29,29 +39,21 @@ class _GamesPageState extends State<GamesPage> {
                   future: _dataService.getBoardgames(),
                   itemBuilder: (boardgame) {
                     return Container(
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(boardgame.name),
-                        ],
-                      ),
-                    );
+                        padding: EdgeInsets.all(1),
+                        child: Card(
+                          child: Container(
+                            height: 75,
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(boardgame.name),
+                              ],
+                            ),
+                          ),
+                        ));
                   },
                 )),
-                IconButton(
-                  alignment: Alignment.centerRight,
-                  icon: Icon(Icons.add_circle),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                      return EditGamePage(
-                        boardgame: Boardgame(),
-                      );
-                    }));
-                  },
-                  iconSize: 50.0,
-                )
               ],
             );
           },
