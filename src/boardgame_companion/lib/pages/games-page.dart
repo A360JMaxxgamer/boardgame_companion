@@ -15,34 +15,46 @@ class _GamesPageState extends State<GamesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Games"),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-              child: FutureListView(
-            future: _dataService.getBoardgames(),
-            itemBuilder: (boardgame) {
-              return Row();
-            },
-          )),
-          IconButton(
-            alignment: Alignment.centerRight,
-            icon: Icon(Icons.add_circle),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute<void>(builder: (BuildContext context) {
-                return EditGamePage(
-                  boardgame: Boardgame(),
-                );
-              }));
-            },
-            iconSize: 50.0,
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Games"),
+        ),
+        body: StreamBuilder<int>(
+          stream: _dataService.dataObservable,
+          builder: (context, snapshot) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                    child: FutureListView(
+                  future: _dataService.getBoardgames(),
+                  itemBuilder: (boardgame) {
+                    return Container(
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(boardgame.name),
+                        ],
+                      ),
+                    );
+                  },
+                )),
+                IconButton(
+                  alignment: Alignment.centerRight,
+                  icon: Icon(Icons.add_circle),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                      return EditGamePage(
+                        boardgame: Boardgame(),
+                      );
+                    }));
+                  },
+                  iconSize: 50.0,
+                )
+              ],
+            );
+          },
+        ));
   }
 }

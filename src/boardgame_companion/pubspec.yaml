@@ -30,6 +30,7 @@ dependencies:
   uuid: 2.2.2
   sqflite:
   path:
+  rxdart:
 
 dev_dependencies:
   flutter_test:
