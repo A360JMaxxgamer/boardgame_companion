@@ -1,7 +1,10 @@
+import 'package:boardgame_companion/db/boardgames_db.dart';
 import 'package:boardgame_companion/pages/games-page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await BoardgamesDb.initDatabase();
   runApp(SpiritIslandCompanionApp());
 }
 
