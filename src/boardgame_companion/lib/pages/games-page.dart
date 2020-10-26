@@ -30,12 +30,7 @@ class _GamesPageState extends State<GamesPage> {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add_circle),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute<void>(builder: (BuildContext context) {
-                return EditGamePage(
-                  boardgame: Boardgame(),
-                );
-              }));
+              _dataService.saveBoardgames([Boardgame()]);
             }),
         body: StreamBuilder<List<Boardgame>>(
           stream: _dataService.dataObservable,
@@ -55,7 +50,22 @@ class _GamesPageState extends State<GamesPage> {
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Row(
-                      children: [Text(game.name)],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(game?.name),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () => {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return EditGamePage(
+                                  boardgameId: game.id,
+                                );
+                              },
+                            ))
+                          },
+                        )
+                      ],
                     ),
                   ),
                 );
