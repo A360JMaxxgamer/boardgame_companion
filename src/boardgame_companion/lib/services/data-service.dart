@@ -5,17 +5,18 @@ import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DataService {
-  static BehaviorSubject<int> _dataChanged;
+  static BehaviorSubject<List<Boardgame>> _dataChanged;
 
-  BehaviorSubject<int> get dataObservable => _dataChanged;
+  BehaviorSubject<List<Boardgame>> get dataObservable => _dataChanged;
 
   DataService() {
     if (_dataChanged == null) {
-      _dataChanged = new BehaviorSubject<int>.seeded(1);
+      _dataChanged =
+          new BehaviorSubject<List<Boardgame>>.seeded(List<Boardgame>.empty());
     }
   }
 
-  Future<void> saveBoardgames(List<Boardgame> boardgames) async {
+  Future saveBoardgames(List<Boardgame> boardgames) async {
     var db = await BoardgamesDb.getDatabase();
     for (var i = 0; i < boardgames.length; i++) {
       var boardgame = boardgames[i];
@@ -27,17 +28,19 @@ class DataService {
         db.insert("boardgames", boardgame.toMap());
       }
     }
-    _dataChanged.add(_dataChanged.value + 1);
+    await fetchBoardgames();
   }
 
   Future deleteBoardgames(List<String> ids) {
     throw Exception();
   }
 
-  Future<List<Boardgame>> getBoardgames() async {
+  Future fetchBoardgames() async {
     var db = await BoardgamesDb.getDatabase();
     var results = await db.query("boardgames");
-    return results.map((e) => Boardgame.fromMap(e)).toList(growable: false);
+    var boardgames =
+        results.map((e) => Boardgame.fromMap(e)).toList(growable: false);
+    _dataChanged.add(boardgames);
   }
 
   Future<Boardgame> getBoardgame(String id) async {
