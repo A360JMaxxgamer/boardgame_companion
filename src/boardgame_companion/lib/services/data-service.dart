@@ -31,8 +31,10 @@ class DataService {
     await fetchBoardgames();
   }
 
-  Future deleteBoardgames(List<String> ids) {
-    throw Exception();
+  Future deleteBoardgames(List<String> ids) async {
+    var db = await BoardgamesDb.getDatabase();
+    db.delete("boardgames", where: "id IN (?)", whereArgs: (ids));
+    await fetchBoardgames();
   }
 
   Future fetchBoardgames() async {

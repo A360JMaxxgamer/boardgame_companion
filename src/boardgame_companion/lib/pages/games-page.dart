@@ -53,17 +53,27 @@ class _GamesPageState extends State<GamesPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(game?.name),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () => {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return EditGamePage(
-                                  boardgameId: game.id,
-                                );
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () => {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return EditGamePage(
+                                      boardgameId: game.id,
+                                    );
+                                  },
+                                ))
                               },
-                            ))
-                          },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _dataService.deleteBoardgames([game.id]);
+                              },
+                            )
+                          ],
                         )
                       ],
                     ),
