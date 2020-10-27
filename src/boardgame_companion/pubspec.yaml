@@ -28,8 +28,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   uuid: 2.2.2
-  sqflite:
+  sembast:
   path:
+  path_provider:
   rxdart:
 
 dev_dependencies:

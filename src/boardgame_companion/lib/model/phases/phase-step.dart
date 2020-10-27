@@ -12,7 +12,13 @@ class PhaseStep {
     id = uuid.v4();
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {"id": id, "phaseId": phaseId, "title": title, "details": details};
   }
+
+  PhaseStep.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        phaseId = json["phaseid"],
+        title = json["title"],
+        details = json["details"];
 }

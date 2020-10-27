@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,15 +13,19 @@ class Boardgame {
     id = uuid.v4();
   }
 
-  Map<String, dynamic> toMap() {
-    return {"id": id, "name": name, "description": descpription};
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "description": descpription,
+      "phases": jsonEncode(phases)
+    };
   }
 
-  static Boardgame fromMap(Map<String, dynamic> map) {
-    var game = Boardgame();
-    game.id = map["id"];
-    game.name = map["name"];
-    game.descpription = map["description"];
-    return game;
-  }
+  Boardgame.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        name = json["name"],
+        descpription = json["description"],
+        phases =
+            (json["phases"] as List<dynamic>).map((e) => Phase.fromJson(e));
 }
