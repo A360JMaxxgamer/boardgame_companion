@@ -2,6 +2,7 @@ import 'package:boardgame_companion/model/boardgame.dart';
 import 'package:boardgame_companion/pages/edit-game-page.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
 import 'package:boardgame_companion/widgets/bg-card.dart';
+import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:flutter/material.dart';
 
 class GamesPage extends StatelessWidget {
@@ -15,7 +16,16 @@ class GamesPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add_circle),
             onPressed: () {
-              bloc.saveBoardgame(Boardgame());
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => NameDialog(
+                        title: "New game",
+                        onSubmit: (name) {
+                          var game = Boardgame();
+                          game.name = name;
+                          bloc.saveBoardgame(game);
+                        },
+                      ));
             }),
         body: StreamBuilder<List<Boardgame>>(
           stream: bloc.boardgames,

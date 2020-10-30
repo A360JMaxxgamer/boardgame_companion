@@ -63,6 +63,8 @@ class _EditGamePageState extends State<EditGamePage> {
                             },
                           ),
                           TextFormField(
+                            minLines: 1,
+                            maxLines: 8,
                             keyboardType: TextInputType.multiline,
                             onChanged: (text) => game.descpription = text,
                             decoration: InputDecoration(

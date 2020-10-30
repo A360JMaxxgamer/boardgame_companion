@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -60,6 +61,25 @@ class BoardgamesRepository {
     }
     _store.record(_boardgamesRecord).update(_database, toJson(snap));
     _boardgamesSubject.add(snap);
+  }
+
+  void savePhases(List<Phase> phases) {
+    phases.forEach((phase) {
+      var game = this.snapshot.firstWhere(
+          (game) => game.id == phase.boardGameId,
+          orElse: () => null);
+      if (game == null) {
+        throw ArgumentError("Try to add phase with unknown game");
+      }
+
+      var existingPhase = game.phases
+          .firstWhere((element) => element.id == phase.id, orElse: () => null);
+      if (existingPhase == null) {
+        game.phases.add(phase);
+      }
+
+      saveBoardgame(game);
+    });
   }
 
   Map<String, dynamic> toJson(List<Boardgame> boardgames) {

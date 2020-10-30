@@ -1,5 +1,6 @@
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:flutter/material.dart';
 
 class PhasesList extends StatelessWidget {
@@ -39,9 +40,17 @@ class PhasesList extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 icon: Icon(Icons.add_circle),
                 onPressed: () {
-                  var phase = Phase();
-                  phase.boardGameId = boardgameId;
-                  //_dataService.savePhases([phase]);
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => NameDialog(
+                            title: "New phase",
+                            onSubmit: (name) {
+                              var phase = Phase();
+                              phase.title = name;
+                              phase.boardGameId = boardgameId;
+                              bloc.savePhases([phase]);
+                            },
+                          ));
                 })
           ]);
         });
