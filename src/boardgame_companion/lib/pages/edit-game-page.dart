@@ -1,6 +1,8 @@
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
-import 'package:boardgame_companion/widgets/bg-card.dart';
+import 'package:boardgame_companion/widgets/edit_board_game_details.dart';
+import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:boardgame_companion/widgets/phases-list.dart';
 import 'package:flutter/material.dart';
 
@@ -30,56 +32,60 @@ class _EditGamePageState extends State<EditGamePage> {
         }
         var game = snapshot.data;
         return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        child: EditBoardGameDetails(
+                            formKey: _formKey, game: game, bloc: bloc),
+                      );
+                    })
+              ],
               title: Text(game.name),
             ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.save),
-              onPressed: () {
-                if (_formKey.currentState.validate() ?? false) {
-                  bloc.saveBoardgame(game);
-                }
-              },
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterDocked,
+            floatingActionButton: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton(
+                      heroTag: "newPhase",
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => NameDialog(
+                                  title: "New phase",
+                                  onSubmit: (name) {
+                                    var phase = Phase();
+                                    phase.title = name;
+                                    phase.boardGameId = game.id;
+                                    bloc.savePhases([phase]);
+                                  },
+                                ));
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton(
+                    heroTag: "saveGame",
+                    child: Icon(Icons.save),
+                    onPressed: () {
+                      if (_formKey.currentState.validate() ?? false) {
+                        bloc.saveBoardgame(game);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
-            body: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    BgCard(
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            keyboardType: TextInputType.text,
-                            onChanged: (text) => game.name = text,
-                            decoration: InputDecoration(
-                                labelText: "Name",
-                                hintText: "The name of the game."),
-                            initialValue: game.name,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Please enter a name";
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            minLines: 1,
-                            maxLines: 8,
-                            keyboardType: TextInputType.multiline,
-                            onChanged: (text) => game.descpription = text,
-                            decoration: InputDecoration(
-                                labelText: "Description",
-                                hintText: "A short description of the game."),
-                            initialValue: game.descpription,
-                          ),
-                        ],
-                      ),
-                    ),
-                    BgCard(
-                      child: PhasesList(boardgameId: widget.boardgameId),
-                    )
-                  ],
-                )));
+            body: PhasesList(boardgameId: widget.boardgameId));
       },
     );
   }

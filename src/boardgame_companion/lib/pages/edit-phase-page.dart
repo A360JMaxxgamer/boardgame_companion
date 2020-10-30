@@ -1,45 +1,63 @@
 import 'package:boardgame_companion/model/phases/phase.dart';
+import 'package:boardgame_companion/services/bloc-provider.dart';
 import 'package:boardgame_companion/widgets/phase-general.dart';
-import 'package:boardgame_companion/widgets/steps-view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class EditPhasePage extends StatefulWidget {
+class EditPhasePage extends StatelessWidget {
   final String phaseId;
 
   const EditPhasePage({Key key, this.phaseId}) : super(key: key);
 
-  _EditPhasePageState createState() => _EditPhasePageState(phaseId);
-}
-
-class _EditPhasePageState extends State<EditPhasePage> {
-  final String phaseId;
-
-  Phase phase;
-
-  _EditPhasePageState(this.phaseId);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Edit phase"),
-        ),
-        body: Flex(
-          direction: Axis.vertical,
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Expanded(
-                child: Column(
+    final bloc = BlocProvider.of(context).boardgameBloc;
+    return StreamBuilder<Phase>(
+      stream: bloc.boardgames
+          .expand((game) => game)
+          .expand((game) => game.phases)
+          .where((phase) => phase.id == phaseId),
+      initialData: null,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+
+        var phase = snapshot.data;
+        return Scaffold(
+            appBar: AppBar(
+              title: Text("Edit phase"),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.info),
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          content: PhaseGeneral(phase: phase),
+                        ));
+                  },
+                )
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add_circle), onPressed: () => {}),
+            body: Flex(
+              direction: Axis.vertical,
+              children: List<Widget>.generate(phase.steps.length, (index) {
+                var step = phase.steps[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    PhaseGeneral(phase: phase),
-                    StepsView(phase: phase),
+                    Text(step.title),
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => {},
+                    )
                   ],
-                ),
-              ),
-            )
-          ],
-        ));
+                );
+              }),
+            ));
+      },
+    );
   }
 }

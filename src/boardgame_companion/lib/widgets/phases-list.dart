@@ -1,5 +1,7 @@
 import 'package:boardgame_companion/model/phases/phase.dart';
+import 'package:boardgame_companion/pages/edit-phase-page.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/widgets/bg-card.dart';
 import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -24,35 +26,30 @@ class PhasesList extends StatelessWidget {
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
-          var phases = snapshot.data;
-          return Column(children: [
-            Column(
-                children: List<Widget>.generate(phases.length, (index) {
-              return Card(
-                  child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  children: [Text(phases.toList()[index].title)],
-                ),
-              ));
-            })),
-            IconButton(
-                alignment: Alignment.centerRight,
-                icon: Icon(Icons.add_circle),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => NameDialog(
-                            title: "New phase",
-                            onSubmit: (name) {
-                              var phase = Phase();
-                              phase.title = name;
-                              phase.boardGameId = boardgameId;
-                              bloc.savePhases([phase]);
-                            },
-                          ));
-                })
-          ]);
+          var phases = snapshot.data?.toList();
+          return ListView(
+              shrinkWrap: true,
+              children: List<Widget>.generate(phases.length, (index) {
+                return BgCard(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(phases[index].title),
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return EditPhasePage(
+                              phaseId: phases[index].id,
+                            );
+                          },
+                        ));
+                      },
+                    )
+                  ],
+                ));
+              }));
         });
   }
 }
