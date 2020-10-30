@@ -2,11 +2,12 @@ import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:flutter/material.dart';
 
 class PhaseGeneral extends StatelessWidget {
-  const PhaseGeneral({
+  PhaseGeneral({
     Key key,
     @required this.phase,
   }) : super(key: key);
 
+  final _formKey = GlobalKey<FormState>();
   final Phase phase;
 
   @override
@@ -18,6 +19,7 @@ class PhaseGeneral extends StatelessWidget {
           textScaleFactor: 1.2,
         ),
         TextFormField(
+            key: _formKey,
             decoration: InputDecoration(
                 labelText: "Index",
                 hintText: "Please enter the index of this phase."),
@@ -26,6 +28,7 @@ class PhaseGeneral extends StatelessWidget {
             validator: (val) =>
                 int.tryParse(val) != null ? null : "Please enter a digit"),
         TextFormField(
+            key: _formKey,
             decoration: InputDecoration(
                 labelText: "Title",
                 hintText: "Please enter the title of this phase."),

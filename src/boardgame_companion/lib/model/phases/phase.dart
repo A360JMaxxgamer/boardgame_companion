@@ -30,6 +30,7 @@ class Phase {
         boardGameId = json["boardgamesid"],
         index = json["index"],
         title = json["title"],
-        steps = (json["steps"] as List<dynamic>)
-            .map((step) => PhaseStep.fromJson(step));
+        steps = (jsonDecode(json["steps"]) as List<dynamic>)
+            .map((step) => PhaseStep.fromJson(step))
+            .toList();
 }

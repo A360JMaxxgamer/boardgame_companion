@@ -26,6 +26,7 @@ class Boardgame {
       : id = json["id"],
         name = json["name"],
         descpription = json["description"],
-        phases =
-            (json["phases"] as List<dynamic>).map((e) => Phase.fromJson(e));
+        phases = (jsonDecode(json["phases"]) as List)
+            .map((e) => Phase.fromJson(e))
+            .toList();
 }
