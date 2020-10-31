@@ -2,7 +2,6 @@ import 'package:boardgame_companion/model/boardgame.dart';
 import 'package:boardgame_companion/services/boardgame_bloc.dart';
 import 'package:flutter/material.dart';
 
-
 class EditBoardGameDetails extends StatelessWidget {
   const EditBoardGameDetails({
     Key key,
@@ -56,7 +55,7 @@ class EditBoardGameDetails extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(Icons.cancel),
-              onPressed: () {                
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
