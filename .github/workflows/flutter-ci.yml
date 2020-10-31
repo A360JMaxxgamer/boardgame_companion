@@ -32,17 +32,17 @@ jobs:
     # Get flutter dependencies.
     - name: "Fetch dependencies"
       run: flutter pub get
-      working-directory: ${{working-dir}}
+      working-directory: ${{env.working-dir}}
     
     # Check for any formatting issues in the code.
     - name: "Check formatting"
       run: flutter format --set-exit-if-changed .
-      working-directory: ${{working-dir}}
+      working-directory: ${{env.working-dir}}
     
     # Statically analyze the Dart code for any errors.
     - name: "Static dart code analysis"
       run: flutter analyze .
-      working-directory: ${{working-dir}}
+      working-directory: ${{env.working-dir}}
     
     # Run widget tests for our flutter project.
     # enable it later
@@ -51,11 +51,11 @@ jobs:
     # Build apk.
     - name: "Build apk"
       run: flutter build apk      
-      working-directory: ${{working-dir}}
+      working-directory: ${{env.working-dir}}
     
     # Upload generated apk to the artifacts.
     - name: "Upload artifacts"
       uses: actions/upload-artifact@v1
       with:
         name: release-apk
-        path: ${{working-dir}}/build/app/outputs/apk/release/app-release.apk
+        path: ${{env.working-dir}}/build/app/outputs/apk/release/app-release.apk
