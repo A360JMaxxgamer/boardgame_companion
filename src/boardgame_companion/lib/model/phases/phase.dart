@@ -8,7 +8,7 @@ class Phase {
   String boardGameId;
   int index = 0;
   String title = "";
-  List<PhaseStep> steps = List<PhaseStep>.empty();
+  List<PhaseStep> steps = List<PhaseStep>.empty(growable: true);
 
   Phase() {
     var uuid = new Uuid();

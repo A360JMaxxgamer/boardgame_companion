@@ -1,5 +1,6 @@
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/widgets/bg-card.dart';
 import 'package:boardgame_companion/widgets/phase-general.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class EditPhasePage extends StatelessWidget {
         var phase = snapshot.data;
         return Scaffold(
             appBar: AppBar(
-              title: Text("Edit phase"),
+              title: Text("${phase.title} - Steps"),
               actions: [
                 IconButton(
                   icon: Icon(Icons.info),
@@ -41,11 +42,11 @@ class EditPhasePage extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add_circle), onPressed: () => {}),
-            body: Flex(
-              direction: Axis.vertical,
+            body: ListView(
               children: List<Widget>.generate(phase.steps.length, (index) {
                 var step = phase.steps[index];
-                return Row(
+                return BgCard(
+                    child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(step.title),
@@ -54,7 +55,7 @@ class EditPhasePage extends StatelessWidget {
                       onPressed: () => {},
                     )
                   ],
-                );
+                ));
               }),
             ));
       },

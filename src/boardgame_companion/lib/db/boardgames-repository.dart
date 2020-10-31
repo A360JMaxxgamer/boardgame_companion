@@ -44,10 +44,10 @@ class BoardgamesRepository {
     if (results == null) {
       await _store
           .record(_boardgamesRecord)
-          .add(_database, toJson(List<Boardgame>.empty()));
+          .add(_database, _toJson(List<Boardgame>.empty()));
       results = await _store.record(_boardgamesRecord).get(_database);
     }
-    var boardgames = fromJson(results);
+    var boardgames = _fromJson(results);
     _boardgamesSubject.add(boardgames);
   }
 
@@ -59,8 +59,19 @@ class BoardgamesRepository {
     if (existing == null) {
       snap.add(boardgame);
     }
-    _store.record(_boardgamesRecord).update(_database, toJson(snap));
+    _saveToDatabase(snap);
     _boardgamesSubject.add(snap);
+  }
+
+  void deleteBoardgame(String boardgameId) {
+    var games = this.snapshot;
+    var boardgame = games.firstWhere((game) => game.id == boardgameId);
+
+    if (boardgame != null) {
+      games.remove(boardgame);
+      _saveToDatabase(games);
+      _boardgamesSubject.add(games);
+    }
   }
 
   void savePhases(List<Phase> phases) {
@@ -82,11 +93,15 @@ class BoardgamesRepository {
     });
   }
 
-  Map<String, dynamic> toJson(List<Boardgame> boardgames) {
+  void _saveToDatabase(List<Boardgame> snap) {
+    _store.record(_boardgamesRecord).update(_database, _toJson(snap));
+  }
+
+  Map<String, dynamic> _toJson(List<Boardgame> boardgames) {
     return {"boardgames": jsonEncode(boardgames)};
   }
 
-  List<Boardgame> fromJson(Map map) {
+  List<Boardgame> _fromJson(Map map) {
     var result = List<Boardgame>();
     var list = jsonDecode(map["boardgames"]) as List;
     var games = list.map((e) => Boardgame.fromJson(e));

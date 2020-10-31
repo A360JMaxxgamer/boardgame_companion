@@ -45,7 +45,7 @@ class _EditGamePageState extends State<EditGamePage> {
                       );
                     })
               ],
-              title: Text(game.name),
+              title: Text("${game.name} - Phases"),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.miniCenterDocked,
@@ -77,9 +77,7 @@ class _EditGamePageState extends State<EditGamePage> {
                     heroTag: "saveGame",
                     child: Icon(Icons.save),
                     onPressed: () {
-                      if (_formKey.currentState.validate() ?? false) {
-                        bloc.saveBoardgame(game);
-                      }
+                      bloc.saveBoardgame(game);
                     },
                   ),
                 ),

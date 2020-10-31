@@ -11,7 +11,9 @@ class BoardgameBloc {
     _repository.saveBoardgame(boardgame);
   }
 
-  void deleteBoardgames(List<String> ids) {}
+  void deleteBoardgame(String id) {
+    _repository.deleteBoardgame(id);
+  }
 
   void fetchBoardgames() {
     _repository.fetchBoardgames();
