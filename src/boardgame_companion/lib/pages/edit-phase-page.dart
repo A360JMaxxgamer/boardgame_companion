@@ -70,7 +70,9 @@ class EditPhasePage extends StatelessWidget {
                     Text(step.title),
                     ItemActionBar(
                       onEdit: () => {},
-                      onDelete: () => {},
+                      onDelete: () => {
+                        bloc.deleteSteps([step.id])
+                      },
                     )
                   ],
                 ));

@@ -1,10 +1,9 @@
 import 'package:boardgame_companion/model/boardgame.dart';
 import 'package:boardgame_companion/pages/edit-game-page.dart';
 import 'package:boardgame_companion/services/boardgame-bloc.dart';
+import 'package:boardgame_companion/widgets/bg-card.dart';
 import 'package:boardgame_companion/widgets/item_action_bar.dart';
 import 'package:flutter/material.dart';
-
-import 'bg-card.dart';
 
 class GameCard extends StatelessWidget {
   const GameCard({

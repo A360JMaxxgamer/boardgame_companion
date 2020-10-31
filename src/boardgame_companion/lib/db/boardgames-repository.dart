@@ -141,6 +141,28 @@ class BoardgamesRepository {
     });
   }
 
+  void deleteSteps(List<String> ids) {
+    ids.forEach((id) {
+      var games = this.snapshot;
+      games.forEach((game) {
+        var phase = game.phases.firstWhere(
+            (element) => element.steps.any((childStep) => childStep.id == id),
+            orElse: () => null);
+        if (phase == null) {
+          return;
+        }
+
+        var existing = phase.steps
+            .firstWhere((element) => element.id == id, orElse: () => null);
+
+        if (existing != null) {
+          phase.steps.remove(existing);
+          saveBoardgame(game);
+        }
+      });
+    });
+  }
+
   Map<String, dynamic> _toJson(List<Boardgame> boardgames) {
     return {"boardgames": jsonEncode(boardgames)};
   }

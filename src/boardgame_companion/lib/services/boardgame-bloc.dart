@@ -20,8 +20,6 @@ class BoardgameBloc {
     _repository.fetchBoardgames();
   }
 
-  void getBoardgame(String id) {}
-
   void savePhases(List<Phase> phases) {
     _repository.savePhases(phases);
   }
@@ -30,19 +28,13 @@ class BoardgameBloc {
     _repository.deletePhases(ids);
   }
 
-  void getPhases() {}
-
-  void getPhase(String id) {}
-
   void saveSteps(List<PhaseStep> phaseSteps) {
     _repository.saveSteps(phaseSteps);
   }
 
-  void deletePhaseSteps(List<String> ids) {}
-
-  void getPhaseSteps() {}
-
-  void getPhaseStep(String id) {}
+  void deleteSteps(List<String> ids) {
+    _repository.deleteSteps(ids);
+  }
 
   Stream<List<Boardgame>> get boardgames => _repository.boardgames;
 }
