@@ -80,7 +80,7 @@ class BoardgamesRepository {
           (game) => game.id == phase.boardGameId,
           orElse: () => null);
       if (game == null) {
-        throw ArgumentError("Try to add phase with unknown game");
+        throw ArgumentError("Try to add phase with unknown boardgame");
       }
 
       var existingPhase = game.phases
@@ -88,6 +88,27 @@ class BoardgamesRepository {
       if (existingPhase == null) {
         game.phases.add(phase);
       }
+
+      saveBoardgame(game);
+    });
+  }
+
+  void deletePhases(List<String> ids) {
+    ids.forEach((phaseId) {
+      var phase = this
+          .snapshot
+          .expand((game) => game.phases)
+          .firstWhere((phase) => phase.id == phaseId, orElse: () => null);
+      if (phase == null) {
+        throw ArgumentError("Try to remove phase with unknown id");
+      }
+      var game =
+          this.snapshot.firstWhere((game) => game.id == phase.boardGameId);
+      if (game == null) {
+        throw ArgumentError("Try to remove phase with unknown boardgame");
+      }
+
+      game.phases.remove(phase);
 
       saveBoardgame(game);
     });

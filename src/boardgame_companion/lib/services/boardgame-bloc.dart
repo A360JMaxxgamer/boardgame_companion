@@ -25,7 +25,9 @@ class BoardgameBloc {
     _repository.savePhases(phases);
   }
 
-  void deletePhases(List<String> ids) {}
+  void deletePhases(List<String> ids) {
+    _repository.deletePhases(ids);
+  }
 
   void getPhases() {}
 

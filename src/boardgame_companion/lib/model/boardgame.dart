@@ -6,7 +6,7 @@ class Boardgame {
   String id;
   String name = "";
   String descpription = "";
-  List<Phase> phases = List<Phase>.empty();
+  List<Phase> phases = List<Phase>.empty(growable: true);
 
   Boardgame() {
     var uuid = new Uuid();

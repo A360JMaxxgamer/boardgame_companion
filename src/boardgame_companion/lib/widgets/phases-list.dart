@@ -2,7 +2,7 @@ import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/pages/edit-phase-page.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
 import 'package:boardgame_companion/widgets/bg-card.dart';
-import 'package:boardgame_companion/widgets/name_dialog.dart';
+import 'package:boardgame_companion/widgets/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class PhasesList extends StatelessWidget {
@@ -30,22 +30,39 @@ class PhasesList extends StatelessWidget {
           return ListView(
               shrinkWrap: true,
               children: List<Widget>.generate(phases.length, (index) {
+                var phase = phases[index];
                 return BgCard(
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(phases[index].title),
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return EditPhasePage(
-                              phaseId: phases[index].id,
-                            );
+                    Text(phase.title),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return EditPhasePage(
+                                  phaseId: phase.id,
+                                );
+                              },
+                            ));
                           },
-                        ));
-                      },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: ConfirmationDialog(
+                                    message:
+                                        "Do you really wan to delete this phase?",
+                                    onConfirmed: () =>
+                                        bloc.deletePhases([phase.id])));
+                          },
+                        )
+                      ],
                     )
                   ],
                 ));
