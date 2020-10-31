@@ -5,6 +5,7 @@ import 'package:boardgame_companion/widgets/bg-card.dart';
 import 'package:boardgame_companion/widgets/item_action_bar.dart';
 import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:boardgame_companion/widgets/phase-general.dart';
+import 'package:boardgame_companion/widgets/step_details.dart';
 import 'package:flutter/material.dart';
 
 class EditPhasePage extends StatelessWidget {
@@ -69,7 +70,15 @@ class EditPhasePage extends StatelessWidget {
                   children: [
                     Text(step.title),
                     ItemActionBar(
-                      onEdit: () => {},
+                      onEdit: () async {
+                        showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              content: StepDetails(
+                                step: step,
+                              ),
+                            ));
+                      },
                       onDelete: () => {
                         bloc.deleteSteps([step.id])
                       },

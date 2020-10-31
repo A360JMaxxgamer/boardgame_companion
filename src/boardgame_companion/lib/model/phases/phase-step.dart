@@ -13,7 +13,7 @@ class PhaseStep {
   }
 
   Map<String, dynamic> toJson() {
-    return {"id": id, "phaseId": phaseId, "title": title, "details": details};
+    return {"id": id, "phaseid": phaseId, "title": title, "details": details};
   }
 
   PhaseStep.fromJson(Map<String, dynamic> json)
