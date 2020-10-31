@@ -1,6 +1,8 @@
+import 'package:boardgame_companion/model/phases/phase-step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
 import 'package:boardgame_companion/widgets/bg-card.dart';
+import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:boardgame_companion/widgets/phase-general.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +43,22 @@ class EditPhasePage extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.add_circle), onPressed: () => {}),
+                child: Icon(Icons.add_circle),
+                onPressed: () {
+                  var step = PhaseStep();
+                  step.phaseId = phase.id;
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => NameDialog(
+                            title: "New step",
+                            onSubmit: (name) {
+                              var step = PhaseStep();
+                              step.title = name;
+                              step.phaseId = phase.id;
+                              bloc.saveSteps([step]);
+                            },
+                          ));
+                }),
             body: ListView(
               children: List<Widget>.generate(phase.steps.length, (index) {
                 var step = phase.steps[index];

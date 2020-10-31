@@ -1,5 +1,6 @@
 import 'package:boardgame_companion/db/boardgames-repository.dart';
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/model/phases/phase-step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 
 class BoardgameBloc {
@@ -33,7 +34,9 @@ class BoardgameBloc {
 
   void getPhase(String id) {}
 
-  void savePhaseSteps(List<Phase> phaseSteps) {}
+  void saveSteps(List<PhaseStep> phaseSteps) {
+    _repository.saveSteps(phaseSteps);
+  }
 
   void deletePhaseSteps(List<String> ids) {}
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:boardgame_companion/model/boardgame.dart';
+import 'package:boardgame_companion/model/phases/phase-step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -116,6 +117,28 @@ class BoardgamesRepository {
 
   void _saveToDatabase(List<Boardgame> snap) {
     _store.record(_boardgamesRecord).update(_database, _toJson(snap));
+  }
+
+  void saveSteps(List<PhaseStep> steps) {
+    steps.forEach((step) {
+      var games = this.snapshot;
+      games.forEach((game) {
+        var phase = game.phases.firstWhere(
+            (element) => element.id == step.phaseId,
+            orElse: () => null);
+        if (phase == null) {
+          return;
+        }
+
+        var existing = phase.steps
+            .firstWhere((element) => element.id == step.id, orElse: () => null);
+
+        if (existing == null) {
+          phase.steps.add(step);
+        }
+        saveBoardgame(game);
+      });
+    });
   }
 
   Map<String, dynamic> _toJson(List<Boardgame> boardgames) {
