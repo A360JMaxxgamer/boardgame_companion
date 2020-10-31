@@ -1,4 +1,4 @@
-import 'package:boardgame_companion/services/boardgame-bloc.dart';
+import 'package:boardgame_companion/services/boardgame_bloc.dart';
 import 'package:flutter/material.dart';
 
 class BlocProvider extends InheritedWidget {

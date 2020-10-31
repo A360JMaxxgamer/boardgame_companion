@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:boardgame_companion/model/boardgame.dart';
-import 'package:boardgame_companion/model/phases/phase-step.dart';
+import 'package:boardgame_companion/model/phases/phase_step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

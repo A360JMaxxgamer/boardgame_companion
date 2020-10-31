@@ -1,6 +1,6 @@
-import 'package:boardgame_companion/pages/games-page.dart';
-import 'package:boardgame_companion/services/bloc-provider.dart';
-import 'package:boardgame_companion/services/boardgame-bloc.dart';
+import 'package:boardgame_companion/pages/games_page.dart';
+import 'package:boardgame_companion/services/bloc_provider.dart';
+import 'package:boardgame_companion/services/boardgame_bloc.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

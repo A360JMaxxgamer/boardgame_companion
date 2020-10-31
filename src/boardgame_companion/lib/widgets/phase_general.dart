@@ -1,5 +1,5 @@
 import 'package:boardgame_companion/model/phases/phase.dart';
-import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/services/bloc_provider.dart';
 import 'package:flutter/material.dart';
 
 class PhaseGeneral extends StatelessWidget {

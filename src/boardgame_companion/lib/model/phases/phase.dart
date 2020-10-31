@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:boardgame_companion/model/phases/phase-step.dart';
+import 'package:boardgame_companion/model/phases/phase_step.dart';
 import 'package:uuid/uuid.dart';
 
 class Phase {

@@ -1,4 +1,4 @@
-import 'package:boardgame_companion/model/phases/phase-step.dart';
+import 'package:boardgame_companion/model/phases/phase_step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:flutter/material.dart';
 

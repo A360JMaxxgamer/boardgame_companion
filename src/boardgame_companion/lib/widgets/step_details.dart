@@ -1,5 +1,5 @@
-import 'package:boardgame_companion/model/phases/phase-step.dart';
-import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/model/phases/phase_step.dart';
+import 'package:boardgame_companion/services/bloc_provider.dart';
 import 'package:flutter/material.dart';
 
 class StepDetails extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:boardgame_companion/model/boardgame.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
-import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/services/bloc_provider.dart';
 import 'package:boardgame_companion/widgets/edit_board_game_details.dart';
 import 'package:boardgame_companion/widgets/name_dialog.dart';
-import 'package:boardgame_companion/widgets/phases-list.dart';
+import 'package:boardgame_companion/widgets/phases_list.dart';
 import 'package:flutter/material.dart';
 
 class EditGamePage extends StatefulWidget {

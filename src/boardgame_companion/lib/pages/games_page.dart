@@ -1,5 +1,5 @@
 import 'package:boardgame_companion/model/boardgame.dart';
-import 'package:boardgame_companion/services/bloc-provider.dart';
+import 'package:boardgame_companion/services/bloc_provider.dart';
 import 'package:boardgame_companion/widgets/game_card.dart';
 import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:flutter/material.dart';

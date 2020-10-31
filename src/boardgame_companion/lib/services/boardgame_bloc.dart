@@ -1,6 +1,6 @@
-import 'package:boardgame_companion/db/boardgames-repository.dart';
+import 'package:boardgame_companion/db/boardgames_repository.dart';
 import 'package:boardgame_companion/model/boardgame.dart';
-import 'package:boardgame_companion/model/phases/phase-step.dart';
+import 'package:boardgame_companion/model/phases/phase_step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 
 class BoardgameBloc {
