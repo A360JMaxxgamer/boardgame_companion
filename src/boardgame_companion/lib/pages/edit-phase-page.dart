@@ -2,6 +2,7 @@ import 'package:boardgame_companion/model/phases/phase-step.dart';
 import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:boardgame_companion/services/bloc-provider.dart';
 import 'package:boardgame_companion/widgets/bg-card.dart';
+import 'package:boardgame_companion/widgets/item_action_bar.dart';
 import 'package:boardgame_companion/widgets/name_dialog.dart';
 import 'package:boardgame_companion/widgets/phase-general.dart';
 import 'package:flutter/material.dart';
@@ -67,9 +68,9 @@ class EditPhasePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(step.title),
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () => {},
+                    ItemActionBar(
+                      onEdit: () => {},
+                      onDelete: () => {},
                     )
                   ],
                 ));
