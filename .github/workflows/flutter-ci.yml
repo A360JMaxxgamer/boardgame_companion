@@ -29,8 +29,6 @@ jobs:
         channel: 'beta' # 'dev', 'alpha', default to: 'stable'
         # flutter-version: '1.12.x' # you can also specify exact version of flutter
     
-    - working-directory: ./src/boardgame_companion
-    
     # Get flutter dependencies.
     - name: "Fetch dependencies"
       run: flutter pub get
