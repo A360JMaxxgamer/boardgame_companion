@@ -1,5 +1,6 @@
 import 'package:boardgame_companion/model/boardgame.dart';
 import 'package:boardgame_companion/pages/edit_game_page.dart';
+import 'package:boardgame_companion/pages/phase_page.dart';
 import 'package:boardgame_companion/services/boardgame_bloc.dart';
 import 'package:boardgame_companion/widgets/bg_card.dart';
 import 'package:boardgame_companion/widgets/item_action_bar.dart';
@@ -20,9 +21,21 @@ class GameCard extends StatelessWidget {
     return BgCard(
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(game?.name),
+      Row(
+        children: [
+          IconButton(
+              icon: Icon(Icons.play_arrow),
+              onPressed: () => {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return PhasePage(boardgameId: game.id);
+                    }))
+                  }),
+          Text(game?.name),
+        ],
+      ),
       ItemActionBar(
-          onEdit: () => Navigator.push(context, MaterialPageRoute(
+          onEdit: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
                   return EditGamePage(
                     boardgameId: game.id,
