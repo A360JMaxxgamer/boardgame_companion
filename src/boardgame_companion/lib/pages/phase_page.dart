@@ -1,6 +1,6 @@
+import 'package:boardgame_companion/model/phases/phase_step.dart';
+import 'package:boardgame_companion/model/phases/phase.dart';
 import 'package:flutter/material.dart';
-import 'package:boardgame_companion/phases/phase-step.dart';
-import 'package:boardgame_companion/phases/phase.dart';
 
 class PhasePage extends StatefulWidget {
   final List<Phase> phases;
