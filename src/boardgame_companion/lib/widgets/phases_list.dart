@@ -27,28 +27,39 @@ class PhasesList extends StatelessWidget {
             return CircularProgressIndicator();
           }
           var phases = snapshot.data?.toList();
-          return ListView(
-              shrinkWrap: true,
-              children: List<Widget>.generate(phases.length, (index) {
-                var phase = phases[index];
-                return BgCard(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(phase.title),
-                    ItemActionBar(
-                      onEdit: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return EditPhasePage(
-                            phaseId: phase.id,
-                          );
-                        },
-                      )),
-                      onDelete: () => bloc.deletePhases([phase.id]),
-                    )
-                  ],
-                ));
-              }));
+          return ReorderableListView(
+              onReorder: (oldindex, newindex) {
+                var item = phases[oldindex];
+                phases.insert(newindex, item);
+                phases.removeAt(oldindex);
+                bloc.savePhaseList(boardgameId, phases);
+              },
+              children: [
+                for (final phase in phases)
+                  BgCard(
+                    key: ValueKey(phase),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(phase.title),
+                          ItemActionBar(
+                            onEdit: () =>
+                                Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return EditPhasePage(
+                                  phaseId: phase.id,
+                                );
+                              },
+                            )),
+                            onDelete: () => bloc.deletePhases([phase.id]),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+              ]);
         });
   }
 }

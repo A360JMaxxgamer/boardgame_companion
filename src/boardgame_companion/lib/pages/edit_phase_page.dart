@@ -17,77 +17,82 @@ class EditPhasePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of(context).boardgameBloc;
     return StreamBuilder<Phase>(
-      stream: bloc.boardgames
-          .expand((game) => game)
-          .expand((game) => game.phases)
-          .where((phase) => phase.id == phaseId),
-      initialData: null,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
+        stream: bloc.boardgames
+            .expand((game) => game)
+            .expand((game) => game.phases)
+            .where((phase) => phase.id == phaseId),
+        initialData: null,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
 
-        var phase = snapshot.data;
-        return Scaffold(
-            appBar: AppBar(
-              title: Text("${phase.title} - Steps"),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.info),
-                  onPressed: () async {
+          var phase = snapshot.data;
+          return Scaffold(
+              appBar: AppBar(
+                title: Text("${phase.title} - Steps"),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          child: AlertDialog(
+                            content: PhaseGeneral(phase: phase),
+                          ));
+                    },
+                  )
+                ],
+              ),
+              floatingActionButton: FloatingActionButton(
+                  child: Icon(Icons.add_circle),
+                  onPressed: () {
+                    var step = PhaseStep();
+                    step.phaseId = phase.id;
                     showDialog(
                         context: context,
-                        child: AlertDialog(
-                          content: PhaseGeneral(phase: phase),
-                        ));
-                  },
-                )
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.add_circle),
-                onPressed: () {
-                  var step = PhaseStep();
-                  step.phaseId = phase.id;
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => NameDialog(
-                            title: "New step",
-                            onSubmit: (name) {
-                              var step = PhaseStep();
-                              step.title = name;
-                              step.phaseId = phase.id;
-                              bloc.saveSteps([step]);
-                            },
-                          ));
-                }),
-            body: ListView(
-              children: List<Widget>.generate(phase.steps.length, (index) {
-                var step = phase.steps[index];
-                return BgCard(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(step.title),
-                    ItemActionBar(
-                      onEdit: () async {
-                        showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              content: StepDetails(
-                                step: step,
-                              ),
+                        builder: (BuildContext context) => NameDialog(
+                              title: "New step",
+                              onSubmit: (name) {
+                                var step = PhaseStep();
+                                step.title = name;
+                                step.phaseId = phase.id;
+                                bloc.saveSteps([step]);
+                              },
                             ));
-                      },
-                      onDelete: () => {
-                        bloc.deleteSteps([step.id])
-                      },
-                    )
-                  ],
-                ));
-              }),
-            ));
-      },
-    );
+                  }),
+              body: ReorderableListView(
+                  onReorder: (oldindex, newindex) {
+                    var item = phase.steps[oldindex];
+                    phase.steps.insert(newindex, item);
+                    phase.steps.removeAt(oldindex);
+                    bloc.saveStepList(phase.boardGameId, phase.id, phase.steps);
+                  },
+                  children: [
+                    for (final step in phase.steps)
+                      BgCard(
+                        key: ValueKey(step),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(step.title),
+                              ItemActionBar(
+                                onEdit: () async {
+                                  showDialog(
+                                      context: context,
+                                      child: AlertDialog(
+                                        content: StepDetails(
+                                          step: step,
+                                        ),
+                                      ));
+                                },
+                                onDelete: () => {
+                                  bloc.deleteSteps([step.id])
+                                },
+                              )
+                            ]),
+                      )
+                  ]));
+        });
   }
 }

@@ -36,5 +36,13 @@ class BoardgameBloc {
     _repository.deleteSteps(ids);
   }
 
+  void saveStepList(String boardgameId, String phaseId, List<PhaseStep> steps) {
+    _repository.saveStepList(boardgameId, phaseId, steps);
+  }
+
+  void savePhaseList(String boardgameId, List<Phase> phases) {
+    _repository.savePhaseList(boardgameId, phases);
+  }
+
   Stream<List<Boardgame>> get boardgames => _repository.boardgames;
 }

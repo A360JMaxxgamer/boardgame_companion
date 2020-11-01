@@ -26,16 +26,6 @@ class PhaseGeneral extends StatelessWidget {
               ),
               TextFormField(
                   decoration: InputDecoration(
-                      labelText: "Index",
-                      hintText: "Please enter the index of this phase."),
-                  initialValue: phase.index.toString(),
-                  onChanged: (text) => phase.index = text as num,
-                  autovalidateMode: AutovalidateMode.always,
-                  validator: (val) => int.tryParse(val) != null
-                      ? null
-                      : "Please enter a digit"),
-              TextFormField(
-                  decoration: InputDecoration(
                       labelText: "Title",
                       hintText: "Please enter the title of this phase."),
                   initialValue: phase.title,
