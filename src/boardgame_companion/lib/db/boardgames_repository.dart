@@ -115,6 +115,12 @@ class BoardgamesRepository {
     });
   }
 
+  void savePhaseList(String boardgameId, List<Phase> phases) {
+    var game = snapshot.firstWhere((element) => element.id == boardgameId);
+    game.phases = phases;
+    saveBoardgame(game);
+  }
+
   void _saveToDatabase(List<Boardgame> snap) {
     _store.record(_boardgamesRecord).update(_database, _toJson(snap));
   }
@@ -161,6 +167,13 @@ class BoardgamesRepository {
         }
       });
     });
+  }
+
+  void saveStepList(String boardgameId, String phaseId, List<PhaseStep> steps) {
+    var boardgame = snapshot.firstWhere((element) => element.id == boardgameId);
+    var phase = boardgame.phases.firstWhere((element) => element.id == phaseId);
+    phase.steps = steps;
+    saveBoardgame(boardgame);
   }
 
   Map<String, dynamic> _toJson(List<Boardgame> boardgames) {
